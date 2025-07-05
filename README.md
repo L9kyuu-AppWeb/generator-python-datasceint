@@ -1,5 +1,8 @@
 # 🚀 Prompt Generator Proyek Data Science
 
+🌐 **Akses Aplikasi di Sini:**  
+👉 [https://l9kyuu-appweb.github.io/generator-python-datasceint/](https://l9kyuu-appweb.github.io/generator-python-datasceint/)
+
 **Prompt Generator** adalah aplikasi web interaktif yang membantu kamu membuat prompt siap pakai untuk proyek data science atau machine learning. Dengan desain modern dan fitur lengkap, kamu dapat menyusun deskripsi proyek secara terstruktur dan intuitif hanya dalam beberapa klik.
 
 ---
