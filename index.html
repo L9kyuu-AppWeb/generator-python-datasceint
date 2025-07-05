@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Generator Proyek Data Science</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+        .form-group:nth-child(6) { animation-delay: 0.6s; }
+        .form-group:nth-child(7) { animation-delay: 0.7s; }
+        .form-group:nth-child(8) { animation-delay: 0.8s; }
+        .form-group:nth-child(9) { animation-delay: 0.9s; }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+            font-size: 1.1em;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .checkbox-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-generate {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-generate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-clear {
+            background: #e74c3c;
+            color: white;
+            box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
+        }
+        
+        .btn-clear:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(231, 76, 60, 0.4);
+        }
+        
+        .btn-example {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            box-shadow: 0 10px 20px rgba(243, 156, 18, 0.3);
+        }
+        
+        .btn-example:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(243, 156, 18, 0.4);
+        }
+        
+        .result-container {
+            margin-top: 30px;
+            padding: 25px;
+            background: #2c3e50;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .result-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .result-title {
+            color: #ecf0f1;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        
+        .copy-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+        
+        .copy-btn.copied {
+            background: #27ae60;
+        }
+        
+        .result-text {
+            background: #34495e;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #4a5568;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Form Generator Proyek Data Science</h1>
+        
+        <form id="dataForm">
+            <div class="form-group">
+                <label for="projectTitle"><span class="emoji">📝</span>Judul Proyek:</label>
+                <input type="text" id="projectTitle" name="projectTitle" placeholder="Masukkan judul proyek Anda">
+            </div>
+            
+            <div class="form-group">
+                <label for="projectGoal"><span class="emoji">🎯</span>Tujuan Proyek:</label>
+                <textarea id="projectGoal" name="projectGoal" placeholder="Jelaskan apa yang ingin dicapai dari proyek ini"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="datasetDesc"><span class="emoji">📦</span>Deskripsi Dataset:</label>
+                <textarea id="datasetDesc" name="datasetDesc" placeholder="Jelaskan jenis data, format, struktur, dan sumber data"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="datasetRows"><span class="emoji">📊</span>Jumlah Baris Dataset:</label>
+                <input type="number" id="datasetRows" name="datasetRows" placeholder="Contoh: 10000">
+            </div>
+            
+            <div class="form-group">
+                <label for="datasetCols"><span class="emoji">📈</span>Jumlah Kolom Dataset:</label>
+                <input type="number" id="datasetCols" name="datasetCols" placeholder="Contoh: 15">
+            </div>
+            
+            <div class="form-group">
+                <label for="modelType"><span class="emoji">🧠</span>Jenis Model:</label>
+                <select id="modelType" name="modelType">
+                    <option value="">Pilih jenis model</option>
+                    <option value="Regresi">Regresi</option>
+                    <option value="Klasifikasi">Klasifikasi</option>
+                    <option value="Clustering">Clustering</option>
+                    <option value="Recommendation">Recommendation</option>
+                    <option value="NLP">NLP (Natural Language Processing)</option>
+                    <option value="Time Series">Time Series</option>
+                    <option value="Deep Learning">Deep Learning</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="methods"><span class="emoji">⚙️</span>Metode yang Diharapkan (Opsional):</label>
+                <input type="text" id="methods" name="methods" placeholder="Contoh: Random Forest, K-Means, ARIMA, XGBoost">
+            </div>
+            
+            <div class="form-group">
+                <label><span class="emoji">📊</span>Visualisasi yang Ingin Ditampilkan:</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="barChart" name="visualization" value="Grafik batang (bar chart)">
+                        <label for="barChart">Grafik Batang</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="histogram" name="visualization" value="Histogram / distribusi">
+                        <label for="histogram">Histogram / Distribusi</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="heatmap" name="visualization" value="Heatmap korelasi">
+                        <label for="heatmap">Heatmap Korelasi</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="lineChart" name="visualization" value="Grafik garis (line chart)">
+                        <label for="lineChart">Grafik Garis</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="scatterPlot" name="visualization" value="Scatter plot">
+                        <label for="scatterPlot">Scatter Plot</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="boxPlot" name="visualization" value="Box plot">
+                        <label for="boxPlot">Box Plot</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="dashboard" name="visualization" value="Dashboard interaktif (Streamlit/Dash)">
+                        <label for="dashboard">Dashboard Interaktif</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="webFeatures"><span class="emoji">🌐</span>Fitur Tambahan Web:</label>
+                <select id="webFeatures" name="webFeatures">
+                    <option value="Tidak">Tidak</option>
+                    <option value="Ya, dengan form input">Ya, dengan form input</option>
+                    <option value="Ya, berbasis upload file">Ya, berbasis upload file</option>
+                    <option value="Ya, dengan form input dan upload file">Ya, dengan form input dan upload file</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="endUsers"><span class="emoji">👥</span>Pengguna Akhir Proyek:</label>
+                <textarea id="endUsers" name="endUsers" placeholder="Jelaskan siapa yang akan menggunakan hasil analisis atau dashboard ini"></textarea>
+            </div>
+            
+            <div class="button-group">
+                <button type="button" class="btn-generate" onclick="generatePrompt()">
+                    <span class="emoji">✨</span>Generate Prompt
+                </button>
+                <button type="button" class="btn-clear" onclick="clearForm()">
+                    <span class="emoji">🔄</span>Clear Form
+                </button>
+                <button type="button" class="btn-example" onclick="fillExampleData()" style="background: linear-gradient(135deg, #f39c12, #e67e22); color: white; box-shadow: 0 10px 20px rgba(243, 156, 18, 0.3);">
+                    <span class="emoji">💡</span>Isi Contoh
+                </button>
+            </div>
+        </form>
+        
+        <div id="resultContainer" class="result-container hidden">
+            <div class="result-header">
+                <span class="result-title">📋 Prompt Siap Pakai:</span>
+                <button class="copy-btn" onclick="copyToClipboard()">📋 Copy</button>
+            </div>
+            <div id="resultText" class="result-text"></div>
+        </div>
+    </div>
+
+    <script>
+        function generatePrompt() {
+            // Get form values
+            const projectTitle = document.getElementById('projectTitle').value;
+            const projectGoal = document.getElementById('projectGoal').value;
+            const datasetDesc = document.getElementById('datasetDesc').value;
+            const datasetRows = document.getElementById('datasetRows').value;
+            const datasetCols = document.getElementById('datasetCols').value;
+            const modelType = document.getElementById('modelType').value;
+            const methods = document.getElementById('methods').value;
+            const webFeatures = document.getElementById('webFeatures').value;
+            const endUsers = document.getElementById('endUsers').value;
+            
+            // Get selected visualizations
+            const visualizations = [];
+            const checkboxes = document.querySelectorAll('input[name="visualization"]:checked');
+            checkboxes.forEach(checkbox => {
+                visualizations.push('- ' + checkbox.value);
+            });
+            
+            // Validate required fields
+            if (!projectTitle || !projectGoal || !datasetDesc || !modelType) {
+                alert('Mohon lengkapi field yang wajib diisi: Judul Proyek, Tujuan Proyek, Deskripsi Dataset, dan Jenis Model');
+                return;
+            }
+            
+            // Generate prompt
+            let prompt = `Saya ingin kamu bertindak sebagai seorang programmer Python profesional yang ahli dalam data science dan machine learning.
+Saya sedang mengerjakan proyek berjudul: "${projectTitle}".
+
+🎯 Tujuan proyek:
+${projectGoal}
+
+📦 Dataset yang digunakan:
+${datasetDesc}`;
+            
+            if (datasetRows || datasetCols) {
+                prompt += `
+Ukuran dataset: ${datasetRows ? datasetRows + ' baris' : ''}${datasetRows && datasetCols ? ' dan ' : ''}${datasetCols ? datasetCols + ' kolom' : ''}`;
+            }
+            
+            prompt += `
+
+🧠 Jenis model yang diinginkan:
+${modelType}`;
+            
+            if (methods) {
+                prompt += `
+
+⚙️ Metode yang diharapkan:
+${methods}`;
+            }
+            
+            if (visualizations.length > 0) {
+                prompt += `
+
+📊 Visualisasi yang ingin ditampilkan:
+${visualizations.join('\n')}`;
+            }
+            
+            prompt += `
+
+🌐 Fitur tambahan web:
+${webFeatures}`;
+            
+            if (endUsers) {
+                prompt += `
+
+👥 Pengguna akhir proyek ini:
+${endUsers}
+
+💻 Yang saya butuhkan dari kamu:
+1. Buatkan kode Python yang lengkap dan siap pakai
+2. Sertakan semua library yang dibutuhkan dengan pip install
+3. Berikan penjelasan setiap bagian kode yang penting
+4. Implementasikan best practices untuk data science project
+5. Sertakan error handling dan validation yang proper
+6. Buatkan dokumentasi yang jelas untuk setiap function
+7. Optimasi performa code untuk dataset yang besar
+
+🔧 Struktur project yang diinginkan:
+- Data preprocessing dan cleaning
+- Exploratory Data Analysis (EDA) 
+- Feature engineering
+- Model training dan evaluation
+- Model deployment${webFeatures !== 'Tidak' ? ' dengan web interface' : ''}
+- Testing dan validation`;
+            } else {
+                prompt += `
+
+💻 Yang saya butuhkan dari kamu:
+1. Buatkan kode Python yang lengkap dan siap pakai
+2. Sertakan semua library yang dibutuhkan dengan pip install
+3. Berikan penjelasan setiap bagian kode yang penting
+4. Implementasikan best practices untuk data science project
+5. Sertakan error handling dan validation yang proper
+6. Buatkan dokumentasi yang jelas untuk setiap function
+7. Optimasi performa code untuk dataset yang besar
+
+🔧 Struktur project yang diinginkan:
+- Data preprocessing dan cleaning
+- Exploratory Data Analysis (EDA) 
+- Feature engineering
+- Model training dan evaluation
+- Model deployment${webFeatures !== 'Tidak' ? ' dengan web interface' : ''}
+- Testing dan validation`;
+            }
+            
+            // Display result
+            document.getElementById('resultText').textContent = prompt;
+            document.getElementById('resultContainer').classList.remove('hidden');
+            
+            // Smooth scroll to result
+            document.getElementById('resultContainer').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+        
+        function clearForm() {
+            if (confirm('Apakah Anda yakin ingin menghapus semua data form?')) {
+                document.getElementById('dataForm').reset();
+                document.getElementById('resultContainer').classList.add('hidden');
+            }
+        }
+        
+        function copyToClipboard() {
+            const resultText = document.getElementById('resultText').textContent;
+            navigator.clipboard.writeText(resultText).then(() => {
+                const copyBtn = document.querySelector('.copy-btn');
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✅ Copied!';
+                copyBtn.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Gagal menyalin ke clipboard. Silakan salin secara manual.');
+            });
+        }
+        
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to form elements
+            const formElements = document.querySelectorAll('input, textarea, select');
+            formElements.forEach(element => {
+                element.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                });
+                
+                element.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                });
+            });
+        });
+        
+        // Function to fill example data
+        function fillExampleData() {
+            document.getElementById('projectTitle').value = 'Sistem Prediksi Harga Saham dengan LSTM Neural Network';
+            document.getElementById('projectGoal').value = 'Membuat aplikasi web yang dapat memprediksi harga saham harian menggunakan deep learning dengan arsitektur LSTM. Aplikasi harus dapat menganalisis data historis, memberikan prediksi akurat, dan menampilkan visualisasi yang mudah dipahami oleh trader dan investor.';
+            document.getElementById('datasetDesc').value = 'Dataset berisi data historis saham dari Yahoo Finance API untuk 50 perusahaan blue chip Indonesia (seperti BBRI, BBCA, TLKM, dll) dengan periode 5 tahun terakhir. Data mencakup: tanggal, harga pembukaan, harga tertinggi, harga terendah, harga penutupan, volume transaksi, dan berbagai indikator teknikal seperti RSI, MACD, Bollinger Bands.';
+            document.getElementById('datasetRows').value = '45000';
+            document.getElementById('datasetCols').value = '12';
+            document.getElementById('modelType').value = 'Time Series';
+            document.getElementById('methods').value = 'LSTM Neural Network, GRU, Random Forest untuk comparison, Technical Analysis indicators';
+            document.getElementById('webFeatures').value = 'Ya, dengan form input dan upload file';
+            document.getElementById('endUsers').value = 'Trader retail, investor individual, analis keuangan, dan fund manager yang membutuhkan tools prediksi harga saham yang akurat dan mudah digunakan untuk decision making dalam trading dan investasi.';
+            
+            // Check some visualization options
+            document.getElementById('lineChart').checked = true;
+            document.getElementById('barChart').checked = true;
+            document.getElementById('heatmap').checked = true;
+            document.getElementById('dashboard').checked = true;
+        }
+    </script>
+</body>
+</html>
